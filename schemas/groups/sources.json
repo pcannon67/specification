@@ -12,7 +12,7 @@
         ".*": {
           "type": "object",
           "title": "Device",
-          "anyOf": [{
+          "oneOf": [{
             "required": ["n2k"]
           }, {
             "required": ["talker", "sentences"]
