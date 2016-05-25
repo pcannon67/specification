@@ -2,13 +2,16 @@
   "type": "object",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "https://signalk.github.io/specification/schemas/groups/sources.json#",
-  "title": "sources",
-  "description": "Metadata about the sources, eg. buses and connected sensors",
+  "title": "Sources",
+  "description": "Metadata about data sources, buses and connected sensors.",
   "patternProperties": {
     ".*": {
       "type": "object",
+      "title": "Bus",
       "patternProperties": {
         ".*": {
+          "type": "object",
+          "title": "Device",
           "anyOf": [{
             "required": ["n2k"]
           }, {
