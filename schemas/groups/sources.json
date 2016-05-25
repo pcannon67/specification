@@ -17,124 +17,148 @@
           }, {
             "required": ["talker", "sentences"]
           }],
-          "anyOf": [{
-            "properties": {
-              "talker": {
-                "type": "string"
-              },
-              "sentences": {
-                "type": "object",
-                "patternProperties": {
-                  "^[A-Z][A-Z][A-Z]$": {
-                    "$ref": "#/definitions/timestamp"
-                  }
+          "properties": {
+            "talker": {
+              "type": "string",
+              "description": "The NMEA 0183 identifier for this device.",
+              "example": "II"
+            },
+            "sentences": {
+              "type": "object",
+              "description": "A list of supported sentences and last time received.",
+              "example": "{\"STW\": \"2016-05-15T08:33:53Z\", \"DBT\": \"2016-05-15T08:33:54Z\"}",
+              "patternProperties": {
+                "^[A-Z]{3}$": {
+                  "$ref": "#/definitions/timestamp"
                 }
-              },
-              "n2k": {
-                "type": "object",
-                "properties": {
-                  "src": {
-                    "type": "string"
-                  },
-                  "pgns": {
-                    "type": "object",
-                    "patternProperties": {
-                      "[0-9]*": {
-                        "$ref": "#/definitions/timestamp"
-                      }
+              }
+            },
+            "n2k": {
+              "type": "object",
+              "title": "NMEA 2000",
+              "description": "Information pertaining to NMEA 2000 devices.",
+              "properties": {
+                "busAddress": {
+                  "type": "integer",
+                  "description": "The device's current CANbus address.",
+                  "example": 10
+                },
+                "pgns": {
+                  "type": "object",
+                  "description": "A list of supported sentences and last time received.",
+                  "example": "{\"127022\": \"2016-05-15T08:33:53Z\", \"130320\": \"2016-05-15T08:33:54Z\"}",
+                  "patternProperties": {
+                    "[0-9]*": {
+                      "$ref": "#/definitions/timestamp"
                     }
-                  },
-                  "uniqueId": {
-                    "type": "string",
-                    "description": "Unique id of the source device"
-                  },
-                  "deviceFunction": {
-                    "type": "number",
-                    "description": "NMEA 2000 Device Function code"
-                  },
-                  "deviceClass": {
-                    "type": "number",
-                    "description": "NMEA 2000 Device Class code"
                   }
+                },
+                "uniqueId": {
+                  "type": "integer",
+                  "description": "ISO device ID. This is a unique hardware ID for the device, which when combined with the deviceFunction, deviceClass and other fields creates the unique device NAME.",
+                  "example": 1134
+                },
+                "deviceFunction": {
+                  "type": "integer",
+                  "description": "NMEA 2000 Device Function code",
+                  "example": 112
+                },
+                "deviceClass": {
+                  "type": "integer",
+                  "description": "NMEA 2000 Device Class code",
+                  "example": 41
+                },
+                "deviceInstance": {
+                  "type": "integer",
+                  "description": "Generally 0, but if there are multiple otherwise identical devices on the network, this number indicates the instance of the device. Part of the device's NAME.",
+                  "example": 0
+                },
+                "industryGroup": {
+                  "type": "integer",
+                  "description": "J1939 industry code. Almost always 4 (marine).",
+                  "example": 4
+                },
+                "certificationLevel": {
+                  "description": "NMEA 2000 certification level, either A or B.",
+                  "enum": ["A", "B"],
+                  "example": "B"
+                },
+                "loadEquivalency": {
+                  "type": "integer",
+                  "description": "The amount of current a device can draw from the NMEA 2000 network. 1 LEN = 50mA.",
+                  "example": 3
                 }
-              },
-              "manufacturer": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "number",
-                    "description": "Manufacturer numeric NMEA 2000 id"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Manufacturer name"
-                  },
-                  "productId": {
-                    "type": "string"
-                  },
-                  "modelId": {
-                    "type": "string"
-                  },
-                  "softwareVersion": {
-                    "type": "string"
-                  },
-                  "hardwareVersion": {
-                    "type": "string"
-                  },
-                  "serialNumber": {
-                    "type": "string"
-                  }
+              }
+            },
+            "manufacturer": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "NMEA assigned manufacturer ID. For NMEA 2000, this is a number, for NMEA 0183 it is a 3 character string. See https://www.nmea.org/content/nmea_standards/manufacturers_c.asp and www.nmea.org/Assets/20121212%20nmea%202000%20registration%20list.pdf.",
+                  "example": "437"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Manufacturer name.",
+                  "example": "Digital Yacht"
+                },
+                "productId": {
+                  "type": "integer",
+                  "description": "Product code assigned by NMEA.",
+                  "example": 1739
+                },
+                "modelId": {
+                  "type": "string",
+                  "description": "Manufacturer's device name.",
+                  "example": "N2NET NMEA 2000 AIS"
+                },
+                "softwareVersion": {
+                  "type": "string",
+                  "description": "The current firmware revision in the device.",
+                  "example": "040200.08.03.00"
+                },
+                "hardwareVersion": {
+                  "type": "string",
+                  "description": "The hardware revision of the device.",
+                  "example": "1.00"
+                },
+                "serialNumber": {
+                  "type": "string",
+                  "description": "Device serial number, assigned by the manufacturer.",
+                  "example": "1122028423"
                 }
               }
             }
-          }, {
-            "patternProperties": {
-              ".*": {
-                "properties": {}
-              }
+          },
+          "properties": {
+            "label": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9\-_]+$",
+              "description": "Human friendly identifier for the device.",
+              "example": "gps0"
+            },
+            "type": {
+              "description": "The type of the device, currently only NMEA2000 and NMEA0183 are supported.",
+              "enum": ["NMEA2000", "NMEA0183"],
+              "example": "NMEA2000"
+            },
+            "installationNote1": {
+              "type": "string",
+              "description": "Installation notes gleaned from the device.",
+              "example": "Installed on 2011-Mar-14."
+            },
+            "installationNote2": {
+              "type": "string",
+              "description": "Installation notes gleaned from the device.",
+              "example": "Engine room, starboard side, above watermaker."
+            },
+            "manufacturerInformation": {
+              "type": "string",
+              "description": "Other information about the device.",
+              "example": "Power off before rotation."
             }
-          }]
-        }
-      },
-      "properties": {
-        "label": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
-        },
-        "manufacturer": {
-          "type": "string"
-        },
-        "productFunction": {
-          "type": "number"
-        },
-        "productClass": {
-          "type": "number"
-        },
-        "productCode": {
-          "type": "number"
-        },
-        "productName": {
-          "type": "string"
-        },
-        "softwareVersion": {
-          "type": "string"
-        },
-        "hardwareVersion": {
-          "type": "string"
-        },
-        "serialNo": {
-          "type": "string"
-        },
-        "installationNote1": {
-          "type": "string"
-        },
-        "installationNote2": {
-          "type": "string"
-        },
-        "manufacturerInfo": {
-          "type": "string"
+          }
         }
       }
     }
