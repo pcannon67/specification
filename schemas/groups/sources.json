@@ -16,14 +16,13 @@
           "example": "n2k0_low_priority"
         },
         "type": {
-          "type": "string",
           "description": "The type of the bus, currently only NMEA2000 and NMEA0183 are supported.",
           "enum": ["NMEA2000", "NMEA0183"],
           "example": "NMEA2000"
         }
       },
       "patternProperties": {
-        ".*": {
+        "^[A-Z0-9]*$": {
           "type": "object",
           "title": "Device",
           "oneOf": [{
@@ -39,7 +38,6 @@
               "example": "gps0"
             },
             "type": {
-              "type": "string",
               "description": "The type of the device, currently only NMEA2000 and NMEA0183 are supported.",
               "enum": ["NMEA2000", "NMEA0183"],
               "example": "NMEA2000"
