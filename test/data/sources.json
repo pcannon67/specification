@@ -4,18 +4,18 @@
     "N2K-1": {
       "36": {
         "n2k": {
-          "src": "36",
+          "busAddress": 36,
           "pgns": {
             "130312": ""
           },
-          "uniqueId": "1722191",
+          "uniqueId": 1722191,
           "deviceClass": 70,
           "deviceFunction": 140
         },
         "manufacturer": {
           "id": 437,
           "name": "Digital Yacht",
-          "productId": "1739",
+          "productId": 1739,
           "modelId": "N2NET NMEA 2000 AIS",
           "softwareVersion": "040200.08.03.00",
           "hardwareVersion": "0",
