@@ -34,6 +34,10 @@
           "type": "number",
           "description": "NMEA2000 pgn of the source message"
         },
+        "instance": {
+          "type": "integer",
+          "description": "NMEA2000 instance of the source message"
+        },
         "sentence": {
           "type": "string",
           "description": "Sentence type of the source NMEA0183 sentence"
@@ -253,6 +257,9 @@
         },
         "sentence": {
           "type": "string"
+        },
+        "instance": {
+          "type": "integer"
         }
       }
     },
