@@ -8,6 +8,20 @@
     ".*": {
       "type": "object",
       "title": "Bus",
+      "properties": {
+        "label": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "Human friendly identifier for the bus.",
+          "example": "n2k0_low_priority"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the bus, currently only NMEA2000 and NMEA0183 are supported.",
+          "enum": ["NMEA2000", "NMEA0183"],
+          "example": "NMEA2000"
+        }
+      },
       "patternProperties": {
         ".*": {
           "type": "object",
